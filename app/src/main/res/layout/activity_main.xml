@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="100dp"
-        android:text="Hello World!!!!"
+        android:text="Hello World\nThis is your first app, which may help us to become android devs!!!!"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -24,11 +24,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_launcher_foreground"
-        />
+        android:src="@drawable/ic_launcher_foreground" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/bSecondScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go to second screen"/>
 
 </LinearLayout>
