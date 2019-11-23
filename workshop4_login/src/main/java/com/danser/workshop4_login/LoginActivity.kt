@@ -9,13 +9,19 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
+    lateinit var prefsRepo: PrefsRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        inject()
         bindViews()
     }
 
+    private fun inject() {
+        prefsRepo = PrefsRepository(this)
+    }
 
     private fun bindViews() {
         bLogin.setOnClickListener {
@@ -24,24 +30,31 @@ class LoginActivity : AppCompatActivity() {
                 password = etPassword.text.toString()
             )
         }
+        bRegister.setOnClickListener {
+            openRegisterScreen()
+        }
     }
 
     private fun login(login: String, password: String) {
-        if (login == LOGIN && password == PASSWORD) {
+        val isLoggedIn = prefsRepo.hasString(key = login, value = password)
+
+        if (isLoggedIn) {
+            //open main screen
             finish()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         } else {
+            //show error
             Snackbar.make(
                 vRoot,
                 "Login or password is incorrect,\nplease try again",
-                Snackbar.LENGTH_LONG
+                Snackbar.LENGTH_SHORT
             ).show()
         }
     }
 
-    companion object {
-        private const val LOGIN = "petr"
-        private const val PASSWORD = "qwerty"
+    private fun openRegisterScreen() {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
     }
 }
