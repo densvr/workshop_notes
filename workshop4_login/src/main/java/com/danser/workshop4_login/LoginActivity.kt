@@ -2,8 +2,8 @@ package com.danser.workshop4_login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.danser.workshop4_login.data.PrefsRepository
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         if (isLoggedIn) {
             //open main screen
             finish()
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, NotesFeedActivity::class.java)
             startActivity(intent)
         } else {
             //show error

@@ -1,4 +1,4 @@
-package com.danser.workshop4_login
+package com.danser.workshop4_login.data
 
 import android.content.Context
 
