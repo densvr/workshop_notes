@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.danser.workshop4_login.presentation.NotesFeedPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 interface NotesFeedView {
     fun update(model: NotesFeedViewModel)
 }
@@ -24,6 +25,17 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
         adapter = NotesAdapter()
         rvList.adapter = adapter
         rvList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+        rvList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    vFab.hide()
+                } else {
+                    vFab.show()
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 
     override fun update(model: NotesFeedViewModel) {
