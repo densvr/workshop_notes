@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.danser.workshop4_login.data.db.NotesDatabaseProvider
 import com.danser.workshop4_login.presentation.NotesFeedPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Collections.swap
@@ -19,11 +20,21 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
 
     private lateinit var adapter: NotesAdapter
     private lateinit var layoutManager: LinearLayoutManager
-    private val presenter: NotesFeedPresenter = NotesFeedPresenter()
+    private lateinit var presenter: NotesFeedPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        presenter = NotesFeedPresenter(
+            notesRepository = NotesRepository(
+                database = NotesDatabaseProvider(
+                    context = this,
+                    allowMainThreadQueries = true
+                ).getNotesDatabase()
+            ),
+            notesVMFactory = NotesVMFactory()
+        )
 
         adapter = NotesAdapter()
         layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)

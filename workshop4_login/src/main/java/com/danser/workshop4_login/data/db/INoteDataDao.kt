@@ -10,7 +10,7 @@ import com.danser.workshop4_login.data.data.NoteEntity
 interface INoteDataDao {
 
     @Query("SELECT * from NoteEntity")
-    fun getAll(): List<NoteEntity>
+    fun getNotes(): List<NoteEntity>
 
     @Insert(onConflict = REPLACE)
     fun insert(entity: NoteEntity)

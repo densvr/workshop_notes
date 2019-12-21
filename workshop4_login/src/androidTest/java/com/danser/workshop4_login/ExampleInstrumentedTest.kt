@@ -2,7 +2,7 @@ package com.danser.workshop4_login
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.danser.workshop4_login.data.NotesRepository
+import com.danser.workshop4_login.data.NotesMockRepository
 import com.danser.workshop4_login.data.data.NoteEntity
 import com.danser.workshop4_login.data.db.NotesDatabaseProvider
 import com.danser.workshop4_login.domain.Note
@@ -24,7 +24,7 @@ class ExampleInstrumentedTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val database = NotesDatabaseProvider(context).getNotesDatabase()
-    private val notesRepo = NotesRepository()
+    private val notesRepo = NotesMockRepository()
 
     @Before
     fun before() {
@@ -50,7 +50,7 @@ class ExampleInstrumentedTest {
 
         val savedEntities = database.run {
             entities.forEach { getNoteDataDao().insert(it) }
-            getNoteDataDao().getAll()
+            getNoteDataDao().getNotes()
         }
         val savedNotes = savedEntities.map { entity ->
             Note(
