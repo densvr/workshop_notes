@@ -12,7 +12,7 @@ class NotesVMFactory() {
     )
 
     private fun getViewModel(notes: List<Note>): List<NoteView.Model> = notes.mapIndexed { pos, note ->
-        val color = if (pos % 2 == 0) Color.TRANSPARENT else Color.LTGRAY
+        val color = if (pos % 2 == 0) Color.WHITE else Color.LTGRAY
         getViewModel(note, color)
     }
 
