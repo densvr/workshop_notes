@@ -9,7 +9,7 @@ import com.danser.workshop4_login.data.data.NoteEntity
 @Database(entities = [NoteEntity::class], version = 1)
 abstract class NotesDatabase : RoomDatabase() {
 
-    abstract fun getNoteDataDao1(): INoteDataDao
+    abstract fun getNoteDataDao(): INoteDataDao
 
 }
 
@@ -17,7 +17,10 @@ interface INotesDatabaseProvider {
     fun getNotesDatabase(): NotesDatabase
 }
 
-class NotesDatabaseProvider(private val context: Context) : INotesDatabaseProvider {
+class NotesDatabaseProvider(
+    private val context: Context,
+    private val allowMainThreadQueries: Boolean = false
+) : INotesDatabaseProvider {
 
     override fun getNotesDatabase(): NotesDatabase = Room
         .databaseBuilder(
@@ -25,5 +28,6 @@ class NotesDatabaseProvider(private val context: Context) : INotesDatabaseProvid
             NotesDatabase::class.java,
             "notes.db"
         )
+        .apply { if (allowMainThreadQueries) allowMainThreadQueries() }
         .build()
 }

@@ -1,15 +1,11 @@
 package com.danser.workshop4_login
 
-import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.danser.workshop4_login.data.INotesRepository
-import com.danser.workshop4_login.data.data.NoteEntity
-import com.danser.workshop4_login.data.db.NotesDatabaseProvider
 import com.danser.workshop4_login.presentation.NotesFeedPresenter
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Collections.swap
@@ -28,8 +24,6 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        //test(this)
 
         adapter = NotesAdapter()
         layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -131,15 +125,3 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
 data class NotesFeedViewModel(
     val notes: List<NoteView.Model>
 )
-
-
-class DatabaseTest(
-    private val context: Context,
-    private val repo: INotesRepository
-) {
-
-
-    fun test() {
-
-    }
-}
