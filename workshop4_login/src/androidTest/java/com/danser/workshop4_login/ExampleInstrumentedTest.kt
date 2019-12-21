@@ -2,6 +2,9 @@ package com.danser.workshop4_login
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.danser.workshop4_login.data.NotesRepository
+import com.danser.workshop4_login.data.data.NoteEntity
+import com.danser.workshop4_login.data.db.NotesDatabaseProvider
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,10 +18,27 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
+    private val context = InstrumentationRegistry.getInstrumentation().targetContext
+    private val database = NotesDatabaseProvider(context).getNotesDatabase()
+    private val notesRepo = NotesRepository()
+
     @Test
     fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.danser.workshop4_login", appContext.packageName)
+
+        val notes = notesRepo.getNotes()
+        val entities = notes.mapIndexed { pos, note ->
+            NoteEntity(
+                id = pos.toString(),
+                title = note.title,
+                text = note.text
+            )
+        }
+
+        database.apply {
+            entities.forEach { getNoteDataDao1().insert(it) }
+            val savedEntities = getNoteDataDao1().getAll()
+            assertEquals(entities, savedEntities)
+        }
     }
 }
