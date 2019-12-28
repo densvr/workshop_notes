@@ -1,19 +1,20 @@
 package com.danser.workshop4_login.data
 
-import com.danser.workshop4_login.data.data.NoteEntity
 import com.danser.workshop4_login.domain.Note
 
 interface INotesRepository {
     fun getNotes(): List<Note>
-    fun addNote(entity: NoteEntity)
+    fun addNote(note: Note)
 }
 
 class NotesMockRepository : INotesRepository {
 
-    override fun getNotes(): List<Note> {
+    private val notes: MutableList<Note>
+
+    init {
         val text =
             "Ипотечный кредит на 4 года 240тр ставка 55тр, переплата 220-240тр\n15:10\tExecuting tasks: [:workshop4_login:assembleDebug] in project /Users/danser/workshops\n15:10\tExecuting tasks: [:workshop4_login:assembleDebug] in project /Users/danser/workshops"
-        return listOf(
+        notes = listOf(
             "note 1",
             "note 2",
             "note 3",
@@ -28,11 +29,12 @@ class NotesMockRepository : INotesRepository {
                 title = it,
                 text = text
             )
-        }
+        }.toMutableList()
     }
 
-    override fun addNote(entity: NoteEntity) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getNotes(): List<Note> = notes
 
+    override fun addNote(note: Note) {
+        notes.add(0, note)
+    }
 }

@@ -9,7 +9,7 @@ import com.danser.workshop4_login.data.NotesMockRepository
 import com.danser.workshop4_login.domain.Note
 
 class NotesFeedPresentationModel(
-    notesRepository: INotesRepository = NotesMockRepository(),
+    private val notesRepository: INotesRepository = NotesMockRepository(),
 /*
     notesRepository = NotesRepository(
         database = NotesDatabaseProvider(
@@ -31,12 +31,26 @@ class NotesFeedPresentationModel(
         update()
     }
 
-    private fun update() {
+    fun onAddNoteClicked() {
+        notesRepository.addNote(NOTE_TO_ADD)
+        val newNotes = notesRepository.getNotes()
+        update { copy(notes = newNotes) }
+    }
+
+    private fun update(mapper: Model.() -> Model = { this }) {
+        model = model.mapper()
         val viewModel = notesVMFactory.toViewModel(model)
         modelLiveData.postValue(viewModel)
     }
 
-    class Model(
+    data class Model(
         val notes: List<Note>
     )
+
+    companion object {
+        private val NOTE_TO_ADD = Note(
+            title = "THIS IS NOTE",
+            text = "which has been added manually"
+        )
+    }
 }

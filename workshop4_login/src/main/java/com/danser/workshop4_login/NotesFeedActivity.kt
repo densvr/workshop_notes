@@ -19,6 +19,8 @@ interface NotesFeedView {
 
 class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
 
+    private lateinit var model: NotesFeedPresentationModel
+
     private lateinit var adapter: NotesAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
@@ -26,11 +28,9 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val model = ViewModelProviders.of(this)[NotesFeedPresentationModel::class.java]
+        model = ViewModelProviders.of(this)[NotesFeedPresentationModel::class.java]
 
-        val observer = Observer<NotesFeedViewModel> { viewModel ->
-            update(viewModel)
-        }
+        val observer = Observer<NotesFeedViewModel> { viewModel -> update(viewModel) }
         model.modelLiveData.observe(this, observer)
 
         initUi()
@@ -59,6 +59,10 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
         })
 
         setItemTouchHelper()
+
+        vFab.setOnClickListener {
+            model.onAddNoteClicked()
+        }
     }
 
     private fun setItemTouchHelper() {

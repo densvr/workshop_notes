@@ -14,14 +14,7 @@ class NotesRepository(
 
     init {
         if (getNotes().isEmpty()) {
-            NotesMockRepository().getNotes().forEach { note ->
-                addNote(
-                    entity = NoteEntity(
-                        title = note.title,
-                        text = note.text
-                    )
-                )
-            }
+            NotesMockRepository().getNotes().forEach { note -> addNote(note) }
         }
     }
 
@@ -34,7 +27,11 @@ class NotesRepository(
             )
         }
 
-    override fun addNote(entity: NoteEntity) = dao
-        .insert(entity)
-
+    override fun addNote(note: Note) {
+        val entity = NoteEntity(
+            title = note.title,
+            text = note.text
+        )
+        dao.insert(entity)
+    }
 }
