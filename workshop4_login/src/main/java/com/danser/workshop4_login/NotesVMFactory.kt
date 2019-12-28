@@ -3,11 +3,11 @@ package com.danser.workshop4_login
 import android.graphics.Color
 import androidx.annotation.ColorInt
 import com.danser.workshop4_login.domain.Note
-import com.danser.workshop4_login.presentation.NotesFeedPresenter
+import com.danser.workshop4_login.presentation.NotesFeedPresentationModel
 
 class NotesVMFactory() {
 
-    fun toViewModel(model: NotesFeedPresenter.Model) = NotesFeedViewModel(
+    fun toViewModel(model: NotesFeedPresentationModel.Model) = NotesFeedViewModel(
         notes = getViewModel(model.notes)
     )
 

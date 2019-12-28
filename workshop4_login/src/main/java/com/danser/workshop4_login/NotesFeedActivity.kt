@@ -3,11 +3,12 @@ package com.danser.workshop4_login
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.danser.workshop4_login.data.db.NotesDatabaseProvider
-import com.danser.workshop4_login.presentation.NotesFeedPresenter
+import com.danser.workshop4_login.presentation.NotesFeedPresentationModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Collections.swap
 
@@ -20,22 +21,27 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
 
     private lateinit var adapter: NotesAdapter
     private lateinit var layoutManager: LinearLayoutManager
-    private lateinit var presenter: NotesFeedPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter = NotesFeedPresenter(
-            notesRepository = NotesRepository(
-                database = NotesDatabaseProvider(
-                    context = this,
-                    allowMainThreadQueries = true
-                ).getNotesDatabase()
-            ),
-            notesVMFactory = NotesVMFactory()
-        )
+        val model = ViewModelProviders.of(this)[NotesFeedPresentationModel::class.java]
 
+        val observer = Observer<NotesFeedViewModel> { viewModel ->
+            update(viewModel)
+        }
+        model.modelLiveData.observe(this, observer)
+
+        initUi()
+    }
+
+    override fun update(model: NotesFeedViewModel) {
+        adapter.items = model.notes
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun initUi() {
         adapter = NotesAdapter()
         layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         rvList.adapter = adapter
@@ -52,6 +58,10 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
             }
         })
 
+        setItemTouchHelper()
+    }
+
+    private fun setItemTouchHelper() {
         val callback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.START or ItemTouchHelper.END
@@ -86,21 +96,6 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
 
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(rvList)
-    }
-
-    override fun update(model: NotesFeedViewModel) {
-        adapter.items = model.notes
-        adapter.notifyDataSetChanged()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.bindView(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter.unbindView()
     }
 
     class NotesAdapter(
