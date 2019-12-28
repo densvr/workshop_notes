@@ -8,9 +8,9 @@ interface INotesRepository {
     fun addNote(entity: NoteEntity)
 }
 
-class NotesMockRepository() : INotesRepository {
+class NotesMockRepository : INotesRepository {
 
-    override fun getNotes(): List<Note> = emptyList()/* {
+    override fun getNotes(): List<Note> {
         val text =
             "Ипотечный кредит на 4 года 240тр ставка 55тр, переплата 220-240тр\n15:10\tExecuting tasks: [:workshop4_login:assembleDebug] in project /Users/danser/workshops\n15:10\tExecuting tasks: [:workshop4_login:assembleDebug] in project /Users/danser/workshops"
         return listOf(
@@ -29,7 +29,7 @@ class NotesMockRepository() : INotesRepository {
                 text = text
             )
         }
-    }*/
+    }
 
     override fun addNote(entity: NoteEntity) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

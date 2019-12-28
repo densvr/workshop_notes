@@ -1,14 +1,8 @@
 package com.danser.workshop4_login.presentation
 
-import android.content.Context
 import com.danser.workshop4_login.NotesFeedView
-import com.danser.workshop4_login.NotesRepository
 import com.danser.workshop4_login.NotesVMFactory
 import com.danser.workshop4_login.data.INotesRepository
-import com.danser.workshop4_login.data.NotesMockRepository
-import com.danser.workshop4_login.data.db.INotesDatabaseProvider
-import com.danser.workshop4_login.data.db.NotesDatabase
-import com.danser.workshop4_login.data.db.NotesDatabaseProvider
 import com.danser.workshop4_login.domain.Note
 
 class NotesFeedPresenter(
