@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.danser.workshop4_login.data.db.NotesDatabaseProvider
+import com.danser.workshop4_login.di.NoteFeedPresentationDependencies
+import com.danser.workshop4_login.di.NotesFeedPresentationFactory
 import com.danser.workshop4_login.presentation.NotesFeedPresentationModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Collections.swap
@@ -28,17 +31,30 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        model = ViewModelProviders.of(this)[NotesFeedPresentationModel::class.java]
-
-        val observer = Observer<NotesFeedViewModel> { viewModel -> update(viewModel) }
-        model.modelLiveData.observe(this, observer)
-
+        initPresentationModel()
         initUi()
     }
 
     override fun update(model: NotesFeedViewModel) {
         adapter.items = model.notes
         adapter.notifyDataSetChanged()
+    }
+
+    private fun initPresentationModel() {
+        val factory = NotesFeedPresentationFactory(NoteFeedPresentationDependencies(
+            notesRepository = NotesRepository(
+                database = NotesDatabaseProvider(
+                    context = this,
+                    allowMainThreadQueries = true
+                ).getNotesDatabase()
+            ),
+            notesVMFactory = NotesVMFactory()
+        ))
+
+        model = ViewModelProviders.of(this, factory)[NotesFeedPresentationModel::class.java]
+
+        val observer = Observer<NotesFeedViewModel> { viewModel -> update(viewModel) }
+        model.modelLiveData.observe(this, observer)
     }
 
     private fun initUi() {

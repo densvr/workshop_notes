@@ -3,21 +3,11 @@ package com.danser.workshop4_login.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.danser.workshop4_login.NotesFeedViewModel
-import com.danser.workshop4_login.NotesVMFactory
-import com.danser.workshop4_login.data.INotesRepository
-import com.danser.workshop4_login.data.NotesMockRepository
+import com.danser.workshop4_login.di.NoteFeedPresentationDependencies
 import com.danser.workshop4_login.domain.Note
 
 class NotesFeedPresentationModel(
-    private val notesRepository: INotesRepository = NotesMockRepository(),
-/*
-    notesRepository = NotesRepository(
-        database = NotesDatabaseProvider(
-            context = this,
-            allowMainThreadQueries = true
-        ).getNotesDatabase()
-    )*/
-    private val notesVMFactory: NotesVMFactory = NotesVMFactory()
+    private val deps: NoteFeedPresentationDependencies
 ) : ViewModel() {
 
     val modelLiveData by lazy {
@@ -27,20 +17,20 @@ class NotesFeedPresentationModel(
     private var model: Model
 
     init {
-        model = Model(notesRepository.getNotes())
+        model = Model(deps.notesRepository.getNotes())
         update()
     }
 
     fun onAddNoteClicked() {
-        notesRepository.addNote(NOTE_TO_ADD)
-        val newNotes = notesRepository.getNotes()
+        deps.notesRepository.addNote(NOTE_TO_ADD)
+        val newNotes = deps.notesRepository.getNotes()
         update { copy(notes = newNotes) }
     }
 
     private fun update(mapper: Model.() -> Model = { this }) {
         model = model.mapper()
-        val viewModel = notesVMFactory.toViewModel(model)
-        modelLiveData.postValue(viewModel)
+        val viewModel = deps.notesVMFactory.toViewModel(model)
+        modelLiveData.value = viewModel
     }
 
     data class Model(
