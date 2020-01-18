@@ -1,17 +1,22 @@
 package com.danser.workshop4_login
 
 import android.app.Application
-import dagger.Component
+import com.danser.workshop4_login.di.component.ApplicationComponent
+import com.danser.workshop4_login.di.component.DaggerApplicationComponent
+import com.danser.workshop4_login.di.component.IApplicationComponentProvider
+import com.danser.workshop4_login.di.module.ApplicationModule
 
+class NotesApplication : Application(), IApplicationComponentProvider {
 
-// Definition of the Application graph
-@Component
-interface ApplicationComponent {
-}
+    private lateinit var appComponent: ApplicationComponent
 
-class NotesApplication : Application() {
+    override fun get(): ApplicationComponent = appComponent
 
-    val appComponent = DaggerApplicationComponent.create()
-
-
+    override fun onCreate() {
+        super.onCreate()
+        appComponent = DaggerApplicationComponent
+            .builder()
+            .applicationModule(ApplicationModule(applicationContext))
+            .build()
+    }
 }

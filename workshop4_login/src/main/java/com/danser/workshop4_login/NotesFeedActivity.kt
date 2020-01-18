@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.danser.workshop4_login.data.db.NotesDatabaseProvider
 import com.danser.workshop4_login.di.NoteFeedPresentationDependencies
 import com.danser.workshop4_login.di.NotesFeedPresentationFactory
+import com.danser.workshop4_login.ext.getApplicationComponent
 import com.danser.workshop4_login.presentation.NotesFeedPresentationModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Collections.swap
+import javax.inject.Inject
 
 
 interface NotesFeedView {
@@ -22,14 +24,19 @@ interface NotesFeedView {
 
 class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
 
-    private lateinit var model: NotesFeedPresentationModel
+    lateinit var model: NotesFeedPresentationModel
 
     private lateinit var adapter: NotesAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
+    @Inject
+    lateinit var factory: NotesFeedPresentationFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        getApplicationComponent().inject(this)
 
         initPresentationModel()
         initUi()
@@ -41,16 +48,6 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
     }
 
     private fun initPresentationModel() {
-        val factory = NotesFeedPresentationFactory(NoteFeedPresentationDependencies(
-            notesRepository = NotesRepository(
-                database = NotesDatabaseProvider(
-                    context = this,
-                    allowMainThreadQueries = true
-                ).getNotesDatabase()
-            ),
-            notesVMFactory = NotesVMFactory()
-        ))
-
         model = ViewModelProviders.of(this, factory)[NotesFeedPresentationModel::class.java]
 
         val observer = Observer<NotesFeedViewModel> { viewModel -> update(viewModel) }

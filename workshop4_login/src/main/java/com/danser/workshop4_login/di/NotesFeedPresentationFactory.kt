@@ -13,10 +13,9 @@ class NotesFeedPresentationFactory(
         return modelClass.getConstructor(NoteFeedPresentationDependencies::class.java)
             .newInstance(dependencies)
     }
-
 }
 
 class NoteFeedPresentationDependencies(
     val notesRepository: INotesRepository,
-    val notesVMFactory: NotesVMFactory = NotesVMFactory()
+    val notesVMFactory: NotesVMFactory
 )
