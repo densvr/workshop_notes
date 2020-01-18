@@ -36,7 +36,7 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        getApplicationComponent().inject(this)
+        getApplicationComponent().notesFeed.create().inject(this)
 
         initPresentationModel()
         initUi()

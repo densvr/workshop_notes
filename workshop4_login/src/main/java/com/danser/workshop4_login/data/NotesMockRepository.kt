@@ -1,13 +1,14 @@
 package com.danser.workshop4_login.data
 
 import com.danser.workshop4_login.domain.Note
+import javax.inject.Inject
 
 interface INotesRepository {
     fun getNotes(): List<Note>
     fun addNote(note: Note)
 }
 
-class NotesMockRepository : INotesRepository {
+class NotesMockRepository @Inject constructor() : INotesRepository {
 
     private val notes: MutableList<Note>
 
@@ -15,14 +16,14 @@ class NotesMockRepository : INotesRepository {
         val text =
             "Ипотечный кредит на 4 года 240тр ставка 55тр, переплата 220-240тр\n15:10\tExecuting tasks: [:workshop4_login:assembleDebug] in project /Users/danser/workshops\n15:10\tExecuting tasks: [:workshop4_login:assembleDebug] in project /Users/danser/workshops"
         notes = listOf(
-            "note 1",
-            "note 2",
-            "note 3",
-            "note 4",
-            "note 1",
-            "note 2",
-            "note 3",
-            "note 4",
+            "hahaha",
+            "hahaha",
+            "hahaha",
+            "hahaha",
+            "hahaha",
+            "hahaha",
+            "hahaha",
+            "hahaha",
             "the last note"
         ).map {
             Note(

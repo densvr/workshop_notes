@@ -5,8 +5,9 @@ import com.danser.workshop4_login.data.NotesMockRepository
 import com.danser.workshop4_login.data.data.NoteEntity
 import com.danser.workshop4_login.data.db.NotesDatabase
 import com.danser.workshop4_login.domain.Note
+import javax.inject.Inject
 
-class NotesRepository(
+class NotesRepository @Inject constructor(
     database: NotesDatabase
 ) : INotesRepository {
 
