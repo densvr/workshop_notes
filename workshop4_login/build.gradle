@@ -56,4 +56,15 @@ dependencies {
     def dagger_version = 2.24
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    // latest stable
+    def koin_version = '2.0.1'
+    // Koin for Kotlin
+    implementation "org.koin:koin-core:$koin_version"
+    // Koin AndroidX Scope features
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    // Koin AndroidX ViewModel features
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    // Koin AndroidX Fragment features
+    //implementation group: 'org.koin', name: 'koin-androidx-fragment', version: '2.1.0-alpha-8'
 }
