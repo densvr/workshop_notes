@@ -6,7 +6,7 @@ import com.danser.workshop4_login.NotesVMFactory
 import com.danser.workshop4_login.data.INotesRepository
 import javax.inject.Inject
 
-class NotesFeedPresentationFactory @Inject constructor(
+class NotesFeedPresentationFactory(
     private val dependencies: NoteFeedPresentationDependencies
 ): ViewModelProvider.Factory {
 
@@ -16,7 +16,7 @@ class NotesFeedPresentationFactory @Inject constructor(
     }
 }
 
-class NoteFeedPresentationDependencies @Inject constructor(
+class NoteFeedPresentationDependencies(
     val notesRepository: INotesRepository,
     val notesVMFactory: NotesVMFactory
 )

@@ -14,6 +14,11 @@ import com.danser.workshop4_login.di.NotesFeedPresentationFactory
 import com.danser.workshop4_login.ext.getApplicationComponent
 import com.danser.workshop4_login.presentation.NotesFeedPresentationModel
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
+import org.koin.androidx.scope.currentScope
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import java.util.Collections.swap
 import javax.inject.Inject
 
@@ -29,8 +34,7 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
     private lateinit var adapter: NotesAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
-    @Inject
-    lateinit var factory: NotesFeedPresentationFactory
+    val factory: NotesFeedPresentationFactory by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
