@@ -46,6 +46,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         prefsRepo.saveStringAsync(login, password)
+        setResult(REGISTERED_CODE)
         finish()
     }
 
@@ -55,6 +56,11 @@ class RegisterActivity : AppCompatActivity() {
             text,
             Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+    companion object {
+        const val REGISTERED_CODE = 0
+        const val ERROR_CODE = 1
     }
 
 }
