@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.danser.workshop4_login.di.NotesFeedPresentationFactory
 import com.danser.workshop4_login.presentation.NotesFeedPresentationModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Collections.swap
 
 
@@ -21,12 +20,10 @@ interface NotesFeedView {
 
 class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
 
-    lateinit var model: NotesFeedPresentationModel
+    private val model: NotesFeedPresentationModel by currentScope.viewModel(this)
 
     private lateinit var adapter: NotesAdapter
     private lateinit var layoutManager: LinearLayoutManager
-
-    private val factory: NotesFeedPresentationFactory by currentScope.inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +39,6 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView {
     }
 
     private fun initPresentationModel() {
-        model = ViewModelProviders.of(this, factory)[NotesFeedPresentationModel::class.java]
-
         val observer = Observer<NotesFeedViewModel> { viewModel -> update(viewModel) }
         model.modelLiveData.observe(this, observer)
     }
