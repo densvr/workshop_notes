@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.danser.workshop4_login.NotesVMFactory
 import com.danser.workshop4_login.data.INotesRepository
-import javax.inject.Inject
 
 class NotesFeedPresentationFactory(
     private val dependencies: NoteFeedPresentationDependencies

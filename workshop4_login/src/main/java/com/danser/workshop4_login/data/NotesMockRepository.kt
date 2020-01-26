@@ -1,14 +1,13 @@
 package com.danser.workshop4_login.data
 
 import com.danser.workshop4_login.domain.Note
-import javax.inject.Inject
 
 interface INotesRepository {
     fun getNotes(): List<Note>
     fun addNote(note: Note)
 }
 
-class NotesMockRepository @Inject constructor() : INotesRepository {
+class NotesMockRepository() : INotesRepository {
 
     private val notes: MutableList<Note>
 
