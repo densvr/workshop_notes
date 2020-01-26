@@ -2,27 +2,23 @@ package com.danser.workshop4_login
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.danser.workshop4_login.data.PrefsRepository
+import com.danser.workshop4_login.data.IPrefsRepository
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.etLogin
 import kotlinx.android.synthetic.main.activity_login.etPassword
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.vRoot
+import org.koin.android.ext.android.inject
 
 class RegisterActivity : AppCompatActivity() {
 
-    lateinit var prefsRepo: PrefsRepository
+    private val prefsRepo: IPrefsRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        inject()
         bindViews()
-    }
-
-    private fun inject() {
-        prefsRepo = PrefsRepository(this)
     }
 
     private fun bindViews() {

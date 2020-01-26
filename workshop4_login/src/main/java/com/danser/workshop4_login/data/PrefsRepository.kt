@@ -2,18 +2,24 @@ package com.danser.workshop4_login.data
 
 import android.content.Context
 
-class PrefsRepository(context: Context) {
+interface IPrefsRepository {
+    fun saveStringAsync(key: String, value: String)
+    fun getString(key: String, default: String): String
+    fun hasString(key: String, value: String): Boolean
+}
+
+class PrefsRepository(context: Context): IPrefsRepository {
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    fun saveStringAsync(key: String, value: String) {
+    override fun saveStringAsync(key: String, value: String) {
         prefs.edit().putString(key, value).apply()
     }
 
-    fun getString(key: String, default: String): String = prefs
+    override fun getString(key: String, default: String): String = prefs
         .getString(key, default) ?: default
 
-    fun hasString(key: String, value: String): Boolean =
+    override fun hasString(key: String, value: String): Boolean =
         prefs.contains(key) && getString(key, "") == value
 
     companion object {

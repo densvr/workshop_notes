@@ -3,24 +3,20 @@ package com.danser.workshop4_login
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.danser.workshop4_login.data.PrefsRepository
+import com.danser.workshop4_login.data.IPrefsRepository
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
+import org.koin.android.ext.android.inject
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var prefsRepo: PrefsRepository
+    private val prefsRepo: IPrefsRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        inject()
         bindViews()
-    }
-
-    private fun inject() {
-        prefsRepo = PrefsRepository(this)
     }
 
     private fun bindViews() {
