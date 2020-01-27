@@ -59,7 +59,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val REGISTERED_CODE = 0
+        const val REGISTERED_CODE = -1
         const val ERROR_CODE = 1
     }
 
