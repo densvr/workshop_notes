@@ -1,9 +1,10 @@
-package com.danser.workshop4_login
+package com.danser.workshop4_login.feature.feed.view
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.annotation.ColorInt
+import com.danser.workshop4_login.R
 import kotlinx.android.synthetic.main.view_note.view.*
 
 class NoteView @JvmOverloads constructor(

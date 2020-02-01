@@ -1,11 +1,13 @@
-package com.danser.workshop4_login
+package com.danser.workshop4_login.feature.auth
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.danser.workshop4_login.RegisterActivity.Companion.REGISTERED_CODE
+import com.danser.workshop4_login.R
+import com.danser.workshop4_login.feature.auth.RegisterActivity.Companion.REGISTERED_CODE
 import com.danser.workshop4_login.di.injector
 import com.danser.workshop4_login.di.module.ApplicationComponent
+import com.danser.workshop4_login.feature.feed.NotesFeedActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -63,7 +65,9 @@ class LoginActivity : AppCompatActivity(), ApplicationComponent by injector.appl
 
     private fun openRegisterScreen() {
         val intent = Intent(this, RegisterActivity::class.java)
-        startActivityForResult(intent, REGISTER_REQUEST_CODE)
+        startActivityForResult(intent,
+            REGISTER_REQUEST_CODE
+        )
     }
 
     companion object {

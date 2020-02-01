@@ -1,7 +1,8 @@
-package com.danser.workshop4_login
+package com.danser.workshop4_login.feature.auth
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.danser.workshop4_login.R
 import com.danser.workshop4_login.di.injector
 import com.danser.workshop4_login.di.module.ApplicationComponent
 import com.google.android.material.snackbar.Snackbar

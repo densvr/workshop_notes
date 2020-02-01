@@ -1,9 +1,8 @@
-package com.danser.workshop4_login.presentation
+package com.danser.workshop4_login.feature.feed.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.danser.workshop4_login.NotesFeedViewModel
-import com.danser.workshop4_login.di.NoteFeedPresentationDependencies
+import com.danser.workshop4_login.feature.feed.NotesFeedViewModel
 import com.danser.workshop4_login.domain.Note
 
 class NotesFeedPresentationModel(
@@ -17,7 +16,10 @@ class NotesFeedPresentationModel(
     private var model: Model
 
     init {
-        model = Model(deps.notesRepository.getNotes())
+        model =
+            Model(
+                deps.notesRepository.getNotes()
+            )
         update()
     }
 

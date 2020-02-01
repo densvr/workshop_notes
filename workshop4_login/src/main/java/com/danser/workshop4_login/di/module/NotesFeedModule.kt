@@ -1,8 +1,8 @@
 package com.danser.workshop4_login.di.module
 
-import com.danser.workshop4_login.NotesVMFactory
-import com.danser.workshop4_login.di.NoteFeedPresentationDependencies
-import com.danser.workshop4_login.di.NotesFeedPresentationFactory
+import com.danser.workshop4_login.feature.feed.presentation.NotesFeedVMFactory
+import com.danser.workshop4_login.feature.feed.presentation.NoteFeedPresentationDependencies
+import com.danser.workshop4_login.feature.feed.presentation.NotesFeedPresentationFactory
 
 
 class NotesFeedModule(component: ApplicationComponent) : NotesFeedComponent {
@@ -11,7 +11,7 @@ class NotesFeedModule(component: ApplicationComponent) : NotesFeedComponent {
         NotesFeedPresentationFactory(
             NoteFeedPresentationDependencies(
                 notesRepository = component.notesRepo,
-                notesVMFactory = NotesVMFactory()
+                notesVMFactory = NotesFeedVMFactory()
             )
         )
 }

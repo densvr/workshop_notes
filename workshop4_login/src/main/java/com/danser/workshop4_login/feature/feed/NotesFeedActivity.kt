@@ -1,4 +1,4 @@
-package com.danser.workshop4_login
+package com.danser.workshop4_login.feature.feed
 
 import android.os.Bundle
 import android.view.ViewGroup
@@ -8,8 +8,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.danser.workshop4_login.feature.feed.view.NoteView
+import com.danser.workshop4_login.NotesApplication.Companion.injector
+import com.danser.workshop4_login.R
 import com.danser.workshop4_login.di.module.NotesFeedComponent
-import com.danser.workshop4_login.presentation.NotesFeedPresentationModel
+import com.danser.workshop4_login.feature.feed.presentation.NotesFeedPresentationModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Collections.swap
 
@@ -18,8 +21,8 @@ interface NotesFeedView {
     fun update(model: NotesFeedViewModel)
 }
 
-class NotesFeedActivity : AppCompatActivity(), NotesFeedView,
-    NotesFeedComponent by NotesApplication.injector.notesFeedModule {
+class NotesFeedActivity : AppCompatActivity(),
+    NotesFeedView, NotesFeedComponent by injector.notesFeedModule {
 
     private lateinit var model: NotesFeedPresentationModel
 
@@ -48,7 +51,8 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView,
     }
 
     private fun initUi() {
-        adapter = NotesAdapter()
+        adapter =
+            NotesAdapter()
         layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         rvList.adapter = adapter
         rvList.layoutManager = layoutManager
@@ -115,13 +119,17 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedView,
         override fun getItemCount(): Int = items.size
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-            val view = NoteView(parent.context).apply {
+            val view = NoteView(
+                parent.context
+            ).apply {
                 layoutParams = RecyclerView.LayoutParams(
                     RecyclerView.LayoutParams.MATCH_PARENT,
                     RecyclerView.LayoutParams.WRAP_CONTENT
                 )
             }
-            return NoteViewHolder(view)
+            return NoteViewHolder(
+                view
+            )
         }
 
         override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
