@@ -8,11 +8,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.danser.workshop4_login.feature.feed.view.NoteView
 import com.danser.workshop4_login.NotesApplication.Companion.injector
 import com.danser.workshop4_login.R
 import com.danser.workshop4_login.di.module.NotesFeedComponent
+import com.danser.workshop4_login.domain.Note
 import com.danser.workshop4_login.feature.feed.presentation.NotesFeedPresentationModel
+import com.danser.workshop4_login.feature.feed.view.NoteView
+import com.danser.workshop4_login.presentation.SingleEvent
+import com.danser.workshop4_login.router.Router
+import com.danser.workshop4_login.router.command.RouterCommand
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Collections.swap
 
@@ -24,7 +28,7 @@ interface NotesFeedView {
 class NotesFeedActivity : AppCompatActivity(),
     NotesFeedView, NotesFeedComponent by injector.notesFeedModule {
 
-    private lateinit var model: NotesFeedPresentationModel
+    private lateinit var presentation: NotesFeedPresentationModel
 
     private lateinit var adapter: NotesAdapter
     private lateinit var layoutManager: LinearLayoutManager
@@ -42,17 +46,28 @@ class NotesFeedActivity : AppCompatActivity(),
         adapter.notifyDataSetChanged()
     }
 
+    private fun perform(routerCommand: RouterCommand) {
+        routerCommand.perform(this, Router)
+    }
+
     private fun initPresentationModel() {
 
-        model = ViewModelProviders.of(this, notesFeedPresentationFactory)[NotesFeedPresentationModel::class.java]
+        presentation = ViewModelProviders.of(
+            this,
+            notesFeedPresentationFactory
+        )[NotesFeedPresentationModel::class.java]
 
-        val observer = Observer<NotesFeedViewModel> { viewModel -> update(viewModel) }
-        model.modelLiveData.observe(this, observer)
+        presentation.modelLiveData.observe(this, Observer { viewModel: NotesFeedViewModel ->
+            update(viewModel)
+        })
+        presentation.routerLiveData.observe(this, Observer { event: SingleEvent<RouterCommand> ->
+            val routerCommand = event.getContentIfNotHandled()
+            if (routerCommand != null) perform(routerCommand)
+        })
     }
 
     private fun initUi() {
-        adapter =
-            NotesAdapter()
+        adapter = NotesAdapter { presentation.onNoteClicked(it) }
         layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         rvList.adapter = adapter
         rvList.layoutManager = layoutManager
@@ -71,7 +86,7 @@ class NotesFeedActivity : AppCompatActivity(),
         setItemTouchHelper()
 
         vFab.setOnClickListener {
-            model.onAddNoteClicked()
+            presentation.onAddNoteClicked()
         }
     }
 
@@ -113,7 +128,8 @@ class NotesFeedActivity : AppCompatActivity(),
     }
 
     class NotesAdapter(
-        var items: List<NoteView.Model> = emptyList()
+        var items: List<NoteView.Model> = emptyList(),
+        private val onClick: (Note) -> Unit
     ) : RecyclerView.Adapter<NoteViewHolder>() {
 
         override fun getItemCount(): Int = items.size
@@ -127,9 +143,8 @@ class NotesFeedActivity : AppCompatActivity(),
                     RecyclerView.LayoutParams.WRAP_CONTENT
                 )
             }
-            return NoteViewHolder(
-                view
-            )
+            view.onClick = onClick
+            return NoteViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {

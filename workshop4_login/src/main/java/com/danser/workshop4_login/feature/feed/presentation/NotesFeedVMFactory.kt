@@ -22,7 +22,8 @@ class NotesFeedVMFactory() {
         NoteView.Model(
             title = note.title,
             text = note.text,
-            backgroundColor = color
+            backgroundColor = color,
+            payload = note
         )
 
 }

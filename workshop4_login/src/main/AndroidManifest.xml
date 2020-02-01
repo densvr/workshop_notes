@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".feature.auth.RegisterActivity" />
+        <activity android:name=".feature.card.NoteCardActivity" />
     </application>
 
 </manifest>

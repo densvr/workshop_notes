@@ -4,6 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.danser.workshop4_login.feature.feed.NotesFeedViewModel
 import com.danser.workshop4_login.domain.Note
+import com.danser.workshop4_login.presentation.SingleEvent
+import com.danser.workshop4_login.router.command.OpenNoteCardCommand
+import com.danser.workshop4_login.router.command.RouterCommand
 
 class NotesFeedPresentationModel(
     private val deps: NoteFeedPresentationDependencies
@@ -13,14 +16,19 @@ class NotesFeedPresentationModel(
         MutableLiveData<NotesFeedViewModel>()
     }
 
+    val routerLiveData by lazy {
+        MutableLiveData<SingleEvent<RouterCommand>>()
+    }
+
     private var model: Model
 
     init {
-        model =
-            Model(
-                deps.notesRepository.getNotes()
-            )
+        model = Model(deps.notesRepository.getNotes())
         update()
+    }
+
+    fun onNoteClicked(note: Note) {
+        perform(OpenNoteCardCommand(note))
     }
 
     fun onAddNoteClicked() {
@@ -33,6 +41,10 @@ class NotesFeedPresentationModel(
         model = model.mapper()
         val viewModel = deps.notesVMFactory.toViewModel(model)
         modelLiveData.value = viewModel
+    }
+
+    private fun perform(command: RouterCommand) {
+        routerLiveData.postValue(SingleEvent(command))
     }
 
     data class Model(
