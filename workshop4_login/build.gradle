@@ -51,15 +51,4 @@ dependencies {
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-
-    // latest stable
-    def koin_version = '2.0.1'
-    // Koin for Kotlin
-    implementation "org.koin:koin-core:$koin_version"
-    // Koin AndroidX Scope features
-    implementation "org.koin:koin-androidx-scope:$koin_version"
-    // Koin AndroidX ViewModel features
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    // Koin AndroidX Fragment features
-    //implementation group: 'org.koin', name: 'koin-androidx-fragment', version: '2.1.0-alpha-8'
 }

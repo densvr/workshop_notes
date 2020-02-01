@@ -4,14 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.danser.workshop4_login.RegisterActivity.Companion.REGISTERED_CODE
-import com.danser.workshop4_login.data.IPrefsRepository
+import com.danser.workshop4_login.di.injector
+import com.danser.workshop4_login.di.module.ApplicationComponent
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
-import org.koin.android.ext.android.inject
 
-class LoginActivity : AppCompatActivity() {
-
-    private val prefsRepo: IPrefsRepository by inject()
+class LoginActivity : AppCompatActivity(), ApplicationComponent by injector.applicationModule {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
