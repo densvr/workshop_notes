@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.danser.workshop4_login.NotesApplication.Companion.injector
 import com.danser.workshop4_login.R
-import com.danser.workshop4_login.di.module.NotesFeedComponent
+import com.danser.workshop4_login.feature.feed.di.NotesFeedComponent
 import com.danser.workshop4_login.feature.feed.presentation.NotesFeedPresentationModel
 import com.danser.workshop4_login.feature.feed.view.FeedItemTouchHelperCallback
 import com.danser.workshop4_login.feature.feed.view.NoteView
@@ -17,7 +17,7 @@ import com.danser.workshop4_login.feature.feed.view.NotesAdapter
 import com.danser.workshop4_login.presentation.SingleEvent
 import com.danser.workshop4_login.router.Router
 import com.danser.workshop4_login.router.command.RouterCommand
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_feed.*
 
 
 class NotesFeedActivity : AppCompatActivity(), NotesFeedComponent by injector.notesFeedModule {
@@ -29,7 +29,7 @@ class NotesFeedActivity : AppCompatActivity(), NotesFeedComponent by injector.no
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_feed)
 
         initPresentationModel()
         initUi()

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.danser.workshop4_login.R
 import com.danser.workshop4_login.di.injector
-import com.danser.workshop4_login.di.module.ApplicationComponent
+import com.danser.workshop4_login.di.ApplicationComponent
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.etLogin
 import kotlinx.android.synthetic.main.activity_login.etPassword

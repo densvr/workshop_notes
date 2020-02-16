@@ -10,10 +10,12 @@ class NoteCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_card)
 
+        val fragment = NoteCardFragment()
+        fragment.arguments = intent.extras
+
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.vContainer, NoteCardFragment())
+            .add(R.id.vContainer, fragment)
             .commit()
     }
-
 }

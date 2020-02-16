@@ -22,6 +22,7 @@ class NotesRepository(
         .getNotes()
         .map { entity ->
             Note(
+                id = entity.id.toString(),
                 title = entity.title,
                 text = entity.text
             )

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.danser.workshop4_login.R
 import com.danser.workshop4_login.feature.auth.RegisterActivity.Companion.REGISTERED_CODE
 import com.danser.workshop4_login.di.injector
-import com.danser.workshop4_login.di.module.ApplicationComponent
+import com.danser.workshop4_login.di.ApplicationComponent
 import com.danser.workshop4_login.feature.feed.NotesFeedActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*

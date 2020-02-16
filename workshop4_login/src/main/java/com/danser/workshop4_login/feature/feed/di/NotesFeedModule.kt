@@ -1,11 +1,14 @@
-package com.danser.workshop4_login.di.module
+package com.danser.workshop4_login.feature.feed.di
 
+import com.danser.workshop4_login.di.ApplicationComponent
 import com.danser.workshop4_login.feature.feed.presentation.NotesFeedVMFactory
 import com.danser.workshop4_login.feature.feed.presentation.NoteFeedPresentationDependencies
 import com.danser.workshop4_login.feature.feed.presentation.NotesFeedPresentationFactory
 
 
-class NotesFeedModule(component: ApplicationComponent) : NotesFeedComponent {
+class NotesFeedModule(
+    component: ApplicationComponent
+) : NotesFeedComponent {
 
     override val notesFeedPresentationFactory: NotesFeedPresentationFactory =
         NotesFeedPresentationFactory(

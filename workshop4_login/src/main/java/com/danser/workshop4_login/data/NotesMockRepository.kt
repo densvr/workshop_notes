@@ -26,6 +26,7 @@ class NotesMockRepository() : INotesRepository {
             "the last note"
         ).map {
             Note(
+                id = id++.toString(),
                 title = it,
                 text = text
             )
@@ -37,4 +38,6 @@ class NotesMockRepository() : INotesRepository {
     override fun addNote(note: Note) {
         notes.add(0, note)
     }
+
+    private var id = 0
 }

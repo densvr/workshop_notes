@@ -4,8 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.danser.workshop4_login.feature.feed.NotesFeedViewModel
 import com.danser.workshop4_login.domain.Note
+import com.danser.workshop4_login.feature.card.NoteCardArguments
 import com.danser.workshop4_login.presentation.SingleEvent
-import com.danser.workshop4_login.router.command.OpenNoteCardCommand
+import com.danser.workshop4_login.router.command.NoteCardCommand
 import com.danser.workshop4_login.router.command.RouterCommand
 
 class NotesFeedPresentationModel(
@@ -28,7 +29,10 @@ class NotesFeedPresentationModel(
     }
 
     fun onNoteClicked(note: Note) {
-        perform(OpenNoteCardCommand(note))
+        val arguments = NoteCardArguments(
+            noteId = note.id
+        )
+        perform(NoteCardCommand(arguments))
     }
 
     fun onAddNoteClicked() {
@@ -53,6 +57,7 @@ class NotesFeedPresentationModel(
 
     companion object {
         private val NOTE_TO_ADD = Note(
+            id = "",
             title = "THIS IS NOTE",
             text = "which has been added manually"
         )
